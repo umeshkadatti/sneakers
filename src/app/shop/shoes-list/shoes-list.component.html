@@ -1,0 +1,54 @@
+<div *ngIf="type=='men'" style="color: white; text-align: center; font-size: 100px">MENS SNEAKERS</div>
+<div *ngIf="type=='women'" style="color: white; text-align: center; font-size: 100px">WOMENS SNEAKERS</div>
+<div *ngIf="type=='sales'" style="color: white; text-align: center; font-size: 100px">SALES</div>
+<div style="background: white;">
+	<div class="row" style="padding: 50px 100px 10px 100px">
+		<div class="col-md-3">
+			<h3>Filter by</h3><hr>
+			<a data-toggle="collapse" data-target="#price" style="cursor: pointer;">Price<span style="float: right;">+</span>
+			</a>
+			<div id="price" class="collapse" style="margin-top: -20px"><br>
+				range
+			</div><hr>
+			<a data-toggle="collapse" data-target="#color" style="cursor: pointer;">Color<span style="float: right;">+</span>
+			</a>
+			<div id="color" class="collapse" style="margin-top: -20px"><br>
+				color
+			</div><hr>
+			<a data-toggle="collapse" data-target="#size" style="cursor: pointer;">Size<span style="float: right">+</span>
+			</a>
+			<div id="size" class="collapse" style="padding-left: 20px; margin-top: -20px"><br>
+				<div><input class="form-check-input" type="checkbox" value="">7</div>
+				<div><input class="form-check-input" type="checkbox" value="">8</div>
+			</div><hr>
+		</div>
+		<div class="col-md-9">
+			<div class="row" style="float: right">
+				<div class="dropdown" style="border: 1px solid black">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Sort by</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" (click)="sortClick('')">SortBy</a>
+						<a class="dropdown-item" (click)="sortClick('newest')">Newest</a>
+						<a class="dropdown-item" (click)="sortClick('prizeLtoH')">Price (low - heigh)</a>
+						<a class="dropdown-item" (click)="sortClick('prizeHtoL')">Price (heigh - low)</a>
+						<a class="dropdown-item" (click)="sortClick('nameAtoZ')">Name A-Z</a>
+						<a class="dropdown-item" (click)="sortClick('nameZtoA')">Name Z-A</a>
+					</div>
+				</div>
+			</div><br><br>
+			<div class="row">
+				<div style="margin-bottom: 10px;" *ngFor="let shoe of shoes | filter:type:'group':sortBy" class="col-md-6" >
+					<div class="container" (click)="onClickProduct(shoe.prodId)">
+						<img class="change-img" src={{shoe.imagePath}} class="image">
+						<div [ngClass]="{overlay: true}" 
+						[ngStyle]="{'background-image': 'url(../'+ shoe.hoverImagePath +')', width: '400px', height: '400px', backgroundRepeat: 'no-repeat'}"></div>
+						<p style="margin-bottom: 3px"> {{shoe.itemName}}</p>
+						<div style="color: #757474;">${{shoe.prize}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

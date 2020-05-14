@@ -1,0 +1,42 @@
+<div class="row" style="background: rgba(000, 000, 000, 0.5); height: 100vh; width: 100vw; top:0; left:0; position: fixed">
+	<div class="col-md-8"></div>
+	<div class="col-md-4" style="background: #ffffff; position: fixed; right: 0; top:0; height: 100vh">
+		<div class="row" style="background: black; color:white; font-size: 30px; text-align: center; height: 100px; padding: 20px">
+			<div class="col-md-2">&gt;</div>
+			<div class="col-md-10">Cart</div>
+		</div>
+		<div *ngIf="items.length > 0">
+		<div style="margin: 20px;height: 20vh; overflow: auto;">
+		<div class="row" style="margin: 20px; margin-top: 0px" *ngFor="let item of items; let i = index">
+			<div class="col-md-5">
+				<a style="cursor: pointer;" (click)="onClickItem(item.cartItemId, item.cartItemGroup)">
+					<img src="{{item.cartImagePath}}" style="width: 100px; height: 100px">
+				</a>
+			</div>
+			<div class="col-md-6">
+				<p>{{item.cartItemName}}</p>
+				<p>{{item.noOfItems}}</p>
+				<p>{{item.cartItemPrice}}</p>
+			</div>
+			<a style="cursor: pointer;" (click)="removeItem(i)"><span style="text-align: right">x</span></a>
+		</div>
+		</div>
+		<div style="margin: 50px; font-size: 20px; height: 10vh;">
+			<p>Subtotal</p>
+			<p>Prize</p>
+		</div>
+		<hr>
+		<div style="text-align: center">
+			<button class="btn btn-warning" style="width:70%" (click)="viewCart()">View Cart</button>
+		</div>
+	</div>
+	<div *ngIf = "items.length == 0">
+		<h1 style="text-align: center">Cart is empty</h1>
+	</div>
+	<br>
+	<div style="text-align: right">
+		<button class="btn btn-primary" (click)="onClose()">Close</button>
+	</div>
+	
+	</div>
+</div>

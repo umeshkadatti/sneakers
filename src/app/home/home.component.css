@@ -1,0 +1,19 @@
+div {
+	text-align: center;
+}
+button{
+	width: auto; 
+	background: white; 
+	margin: 200px;
+	font-size: 30px;
+	border: 0px;
+}
+button:hover{
+	background: black;
+	color: white;
+	border: 0px;
+}
+img:hover {
+	transition: 0.8s;
+	transform: scale(1.1);
+}

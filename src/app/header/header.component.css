@@ -1,0 +1,15 @@
+a{
+	color: white;
+}
+ul li ul{
+	display: none;
+}
+ul li a:hover ul{
+	position: absolute;
+	padding-right: 20px;
+	margin-left: -30px; 
+	color: white;
+	background: black;
+	display: block;
+	z-index: 4;
+}

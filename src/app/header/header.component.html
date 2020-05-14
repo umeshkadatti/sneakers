@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-md navbar-dark" style="background: black;">
+	<div class="row">
+		<a [routerLink]="['']" class="navbar-brand" style="margin-left: 150px; font-family: 'Courier New';">
+			<span><del style="font-size: 50px">as</del></span>&nbsp;awsome sneakers
+		</a>
+	</div>
+	<ul class="nav navbar" style="margin-left: 200px">
+		<li class="nav-item">
+			<a class="nav-link" [routerLink]="['']">Home</a>
+		</li>
+		<li class="nav-item">
+			<a style="color: white"><span style="cursor: context-menu;">Shop</span>
+				<ul style="list-style: none;">
+					<li style="margin-left: -10px; cursor: pointer"><a (click)="onChoose('men')">men</a></li>
+					<li style="margin-left: -10px; cursor: pointer"><a (click)="onChoose('women')">women</a></li>
+					<li style="margin-left: -10px; cursor: pointer"><a (click)="onChoose('sales')">sales</a></li>
+				</ul>
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="">About Us</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="">Customer Service</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" (click)="onLogIn()"style="color: #eb6126; font-size:25px; cursor: pointer;"><span class="fa fa-user-circle"></span>{{ isLogIn ? 'Log In' : 'Log Out'}}</a>
+		</li>
+		<li class="nav-itm">
+			<a (click)="onClick()" style="color: #eb6126; font-size:25px; cursor: pointer;"><span class="fa fa-shopping-cart"></span></a>
+		</li>
+	</ul>
+</nav>

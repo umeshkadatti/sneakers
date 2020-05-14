@@ -1,0 +1,12 @@
+div{
+	color: white;
+}
+input{
+	background: transparent;
+}
+input:hover{
+	border: 4px solid white;
+}
+::placeholder{
+	color:white;
+}

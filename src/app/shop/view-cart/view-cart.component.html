@@ -1,0 +1,35 @@
+<div style="background: white; padding: 100px">
+	<div class="row" *ngIf="viewItems.length > 0">
+		<div class="col-md-8"><strong style="font-size: 20px">My Cart</strong>
+			<hr>
+			<div class="row" style="margin: 15px" *ngFor="let item of viewItems; let i = index" >
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-4">
+							<a [routerLink]="['../', item.cartItemGroup, item.cartItemId]" style="cursor: pointer;"><img src="{{item.cartImagePath}}" style="width: 100px; height: 100px"></a>
+						</div>
+						<div class="col-md-8">
+							<p style="line-height: 5px">{{item.cartItemName}}</p>
+							<p style="line-height: 10px">{{item.cartItemPrice}}</p>
+							<p style="line-height: 5px">Size: {{item.cartItemSize}}</p>
+							<p style="line-height: 5px">Color: {{item.cartItemColor}}</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<input (keyup.enter)="onEnter(i, item.noOfItems)" type="number" style="width: 70px" name="quantity" value="{{item.noOfItems}}">
+					&nbsp; $ {{item.cartItemPrice * item.noOfItems}}
+				</div>
+				<div class="col-md-1"><a (click)="onRemove(i)" style="cursor: pointer;">X</a></div>
+			</div>
+		</div>
+		<div class="col-md-4"><strong style="font-size: 20px">Order Summary</strong>
+			<hr>
+			<app-order-summary [price]="formDetail"></app-order-summary>
+		</div>
+	</div>
+	<div *ngIf="viewItems.length == 0" style="width: 100vw; height: 100vh; background: white; left: 20vw; right: 20vw; text-align: center;">
+		<p style="font-size: 50px">Cart is empty</p>
+		<p [routerLink]="['/']" style="cursor: pointer;"><a>Continue Shopping</a></p>
+	</div>
+</div>

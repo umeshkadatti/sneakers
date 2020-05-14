@@ -1,0 +1,17 @@
+<div style="background-image: url('./assets/women_shoes.jpg')">
+	<button (click)="onChoose('women')">OUR AWSOME WOMEN'S EDITION ></button><br>
+</div>
+<div style="background-image: url('./assets/men_shoes.jpg')">
+	<button (click)="onChoose('men')">AS MEN'S ></button><br>
+</div>
+<div style="background-image: url('./assets/sales_shoes.jpg')">
+	<button (click)="onChoose('sales')">FINAL SALE 40%-60% ></button>
+</div>
+<div style="background: #f0f0f0;">
+	<div class="row" style="padding: 0 200px 0 200px">
+		<div *ngFor="let shoe of shoes" class="col-md-4">
+			<img src="{{shoe.imagePath}}" width="300px" height="300px">
+		</div>
+	</div>
+</div>
+

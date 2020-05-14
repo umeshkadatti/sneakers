@@ -1,0 +1,47 @@
+<div style="background: white; padding: 50px 200px">
+<!-- Top navigation -->
+	<div class="row" style="padding-bottom: 50px">
+		<div class="col-md-12">
+			<span [routerLink]="['']" style="cursor: pointer;">Home /</span >
+			<span style="cursor: pointer;" [routerLink]="['../']" *ngIf="shoe.group == 'men'"> Men </span>
+			<span style="cursor: pointer;" [routerLink]="['../']" *ngIf="shoe.group == 'women'"> WOMEN </span>
+			<span style="cursor: pointer;" [routerLink]="['../']" *ngIf="shoe.group == 'sale'"> SALES </span>/ <span style="color: #9c9c9c;">{{shoe.itemName}}</span>
+			<span style="float: right">&lt; <a style="cursor: pointer" (click)="onPrev()">Prev</a> | <a style="cursor: pointer" (click)="onNext()">Next</a> &gt;</span>
+		</div>
+	</div>
+
+<!-- Display Product image -->
+
+	<div class="row">
+		<div class="col-md-7">
+			<img src="{{mainImage}}" style="width: 100%; height: 500px;"><br><br>
+			<div>
+				<a (click)="changeImage(shoe.imagePath)" style="cursor: pointer"><img src="{{shoe.imagePath}}" style="max-height: 60px; padding: 0 10px 0 20px"></a>
+				<a (click)="changeImage(shoe.hoverImagePath)" style="cursor: pointer"><img src="{{shoe.hoverImagePath}}" style="max-height: 60px"></a>
+			</div>
+			<div>Small product detail</div>
+		</div>
+
+<!-- Display product details -->
+
+		<div class="col-md-4" style="margin-left: 20px;">
+			<h3>{{shoe.itemName}}</h3>
+			<p>SKU : {{shoe.prodId}}</p>
+			<p>$ {{shoe.prize}}</p>
+			<p>Size</p>
+			<select class="form-control" style="" #size>
+				<!-- <option value="0">Setect</option> -->
+				<option value="7"> 7 </option>
+				<option value="8"> 8 </option>
+				<option value="9"> 9 </option>
+				<option value="10"> 10 </option>
+			</select>
+			<p>color</p>
+			<p>Quantity</p>
+			<input [(ngModel)]="qty" class="form-control" type="number" name="quantity" style="width: 100px"><br>
+			<button class="btn btn-warning" type="submit" style="width: 100%" (click)="addToCart(size.value)">Add to Cart</button><br>
+			<div>PRODUCT INFO</div>
+		<div>RETUEN AND REFUND POLICY</div>
+		</div>
+	</div>
+</div>
