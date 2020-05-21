@@ -17,6 +17,9 @@ export class ItemsComponent implements OnInit {
 
   ngOnInit() {
   	this.items = this.shopService.getShoes();
+    this.shopService.shoeChanged.subscribe((shoes: ShoeModel[])=>{
+      this.items = shoes;
+    })
   }
 
   onAdd(){

@@ -45,12 +45,11 @@ export class ShopService{
 	addShoe(shoe){
 		this.shoes.push(shoe);
 		this.shoeChanged.next(this.shoes.slice());
-		console.log(this.shoes);
 	}
 
 	deleteShoe(id){
 		this.shoes.splice(id, 1);
-		return this.shoes;
+		this.shoeChanged.next(this.shoes.slice());
 	}
 
 	getNextShoe(array: ShoeModel[]){

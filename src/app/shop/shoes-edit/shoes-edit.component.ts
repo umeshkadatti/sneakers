@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ShopService } from '../shop.service';
 import { ShoeModel } from '../../shared/shoe.model';
@@ -19,7 +19,7 @@ export class ShoesEditComponent implements OnInit {
   shoeForm: FormGroup;
   update = false;
 
-  constructor(private shopService: ShopService, private route: ActivatedRoute) { }
+  constructor(private shopService: ShopService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
   	this.route.params.subscribe((params: Params)=>{
@@ -47,12 +47,24 @@ export class ShoesEditComponent implements OnInit {
     let imageHoverUrl = this.shoeForm.get('imageHoverUrl').value;
     let sale = this.shoeForm.get('sale').value;
     let newShoe = new ShoeModel(itemId, group, itemName, price, imageUrl, imageHoverUrl, color, size, sale);
-    this.shopService.addShoe(newShoe);
-    console.log(newShoe);
+    if(!this.editMode){
+      this.shopService.addShoe(newShoe);
+    } else {
+      this.shopService.updateShoes(this.id, newShoe);
+    }
+    this.onCancel();
   }
 
   onClear(){
     this.shoeForm.reset();
+  }
+
+  onCancel(){
+    this.router.navigate(['shop/items']);
+  }
+
+  onDelete(){
+    this.shopService.deleteShoe(this.id);
   }
 
   private initForm(){
