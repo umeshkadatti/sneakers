@@ -21,7 +21,7 @@ export class ViewCartComponent implements OnInit{
 
   onEnter(i, items){
     console.log(i, items);
-    this.viewItems[i].noOfItems;
+    this.viewItems[i];
   }
 
   onRemove(index: number){

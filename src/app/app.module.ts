@@ -23,6 +23,7 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
 import { OrderSummaryComponent } from './shop/view-cart/order-summary/order-summary.component';
+import { ItemsComponent } from './shop/items/items.component';
 // import { ProdDetailResolver } from './shop/shoes-detail/prod-detail.resolver';
 
 const appRoutes: Routes = [
@@ -31,6 +32,10 @@ const appRoutes: Routes = [
     children: [
       {path: 'cart', component: CartComponent},
       {path: 'view-cart', component: ViewCartComponent},
+      {path: 'items', component: ItemsComponent, children: [
+        { path: 'new', component: ShoesEditComponent },
+        { path: ':id/edit', component: ShoesEditComponent } 
+      ]},
       {path: ':cat', component: ShoesListComponent, resolve: {type : ShoeResolver }},
       {path: ':cat/:prodid', component: ShoesDetailComponent }
     ]
@@ -56,12 +61,14 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     ViewCartComponent,
     AuthComponent,
-    OrderSummaryComponent
+    OrderSummaryComponent,
+    ItemsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'})
   ],
   providers: [ShoeResolver, AuthGuard, AuthService],

@@ -11,8 +11,7 @@ export class ShopService{
 
 	resultArray: ShoeModel[];
 
-	arrayLength = new Subject<number>();
-	resultShoes = new Subject<ShoeModel[]>();
+	shoeChanged = new Subject<ShoeModel[]>();
 
 	shoes: ShoeModel[] = [
 	{prodId: 111, group: 'men', itemName: 'Product 1', imagePath: '../assets/1_men.jpg', hoverImagePath: '../assets/1_men_hover.jpg', prize: 229, color: 'brown', size: 7, sale: 'yes'},
@@ -32,6 +31,26 @@ export class ShopService{
 			return s.prodId == id;
 		});
 		return shoe;
+	}
+
+	getShoeByIndex(index: number){
+		return this.shoes[index];
+	}
+
+	updateShoes(id: number, shoe: ShoeModel){
+		this.shoes[id] = shoe;
+		this.shoeChanged.next(this.shoes.slice());
+	}
+
+	addShoe(shoe){
+		this.shoes.push(shoe);
+		this.shoeChanged.next(this.shoes.slice());
+		console.log(this.shoes);
+	}
+
+	deleteShoe(id){
+		this.shoes.splice(id, 1);
+		return this.shoes;
 	}
 
 	getNextShoe(array: ShoeModel[]){

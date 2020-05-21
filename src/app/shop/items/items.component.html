@@ -1,0 +1,20 @@
+<!-- public prodId: number, public group: string, public itemName: string, public prize: number, public imagePath: string, public hoverImagePath: string, public color: string, public size: number, public sale: string -->
+<div style="background: white;padding:50px">
+	<button class="btn btn-primary" style="margin-left: 300px" (click)="onAdd()">Add New Item</button><br><br>
+	<div class="row">
+		<div class="col-md-5">
+			<ul class="list-group" >
+				<li class="list-group-item" *ngFor="let item of items; let i = index"
+				routerLink="{{i}}/edit" style="cursor: pointer">
+					<img src="{{item.imagePath}}" style="width: 100px; height: 100px; float: right;">
+					<p>#{{item.prodId}} <strong>{{item.itemName}}</strong>  {{item.group}}</p>
+					<p>Color: {{item.color}} | Size:{{item.size}}</p>
+					<p>${{item.prize}}</p>		
+				</li>
+			</ul>			
+		</div>
+		<div class="col-md-7">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>

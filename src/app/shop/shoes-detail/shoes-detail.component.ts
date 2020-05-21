@@ -37,6 +37,13 @@ export class ShoesDetailComponent implements OnInit {
     this.mainImage = imagePath;
   }
 
+  addToCart(size: number){
+    this.router.navigate(['shop/cart']);
+    this.cartService.cartItems.push({cartItemId: this.shoe.prodId, cartItemGroup: this.shoe.group,cartItemName: this.shoe.itemName, cartImagePath: this.shoe.imagePath, cartItemPrice: this.shoe.prize, cartItemSize: size, cartItemColor: this.shoe.color, noOfItems: this.qty});
+  }
+
+  // next item
+
   onNext(){
     this.id = +this.route.snapshot.params['prodid'];
     this.index = this.shopService.shoes.indexOf(this.shoe);
@@ -49,6 +56,8 @@ export class ShoesDetailComponent implements OnInit {
     });
   }
 
+  // previous item
+
   onPrev(){
     this.id = +this.route.snapshot.params['prodid'];
     this.index = this.shopService.shoes.indexOf(this.shoe);
@@ -59,11 +68,6 @@ export class ShoesDetailComponent implements OnInit {
       this.shoe = this.shopService.getShoe(params.prodid);
       this.mainImage = this.shoe.imagePath;
     });
-  }
-
-  addToCart(size: number){
-    this.router.navigate(['shop/cart']);
-    this.cartService.cartItems.push({cartItemId: this.shoe.prodId, cartItemGroup: this.shoe.group,cartItemName: this.shoe.itemName, cartImagePath: this.shoe.imagePath, cartItemPrice: this.shoe.prize, cartItemSize: size, cartItemColor: this.shoe.color, noOfItems: this.qty});
   }
 
 }

@@ -22,6 +22,10 @@ export class ShoesListComponent implements OnInit {
       this.type = data['type'];
     })
   	this.shoes = this.shopService.getShoes();
+    this.shopService.shoeChanged.subscribe((shoes : ShoeModel[])=>{
+      this.shoes = shoes;
+      console.log(shoes);
+    })
   }
 
   onClickProduct(id: number){
