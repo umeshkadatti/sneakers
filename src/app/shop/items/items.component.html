@@ -1,20 +1,29 @@
 <!-- public prodId: number, public group: string, public itemName: string, public prize: number, public imagePath: string, public hoverImagePath: string, public color: string, public size: number, public sale: string -->
 <div style="background: white;padding:50px">
-	<button class="btn btn-primary" style="margin-left: 300px" (click)="onAdd()">Add New Item</button><br><br>
-	<div class="row">
-		<div class="col-md-5">
-			<ul class="list-group" >
-				<li class="list-group-item" *ngFor="let item of items; let i = index"
-				routerLink="{{i}}/edit" style="cursor: pointer">
-					<img src="{{item.imagePath}}" style="width: 100px; height: 100px; float: right;">
-					<p>#{{item.prodId}} <strong>{{item.itemName}}</strong>  {{item.group}}</p>
-					<p>Color: {{item.color}} | Size:{{item.size}}</p>
-					<p>${{item.prize}}</p>		
-				</li>
-			</ul>			
-		</div>
-		<div class="col-md-7">
-			<router-outlet></router-outlet>
+	<button class="btn btn-primary" (click)="onFetchPosts()">Fetch Shoes</button> &nbsp;
+	<button class="btn btn-primary" (click)="onSaveData()">Save</button>
+	<button class="btn btn-primary" style="margin-left: 300px" (click)="addNew()">Add New Item</button><br><br>
+	<div *ngIf="error" class="alert alert-danger">{{error}} 
+		<button class="btn btn-danger float-right" (click)="isOkay()">okay</button>
+	</div>
+	<p *ngIf="isLoading && !error">Loading...</p>
+	<div *ngIf="items.length > 0">
+		<div class="row">
+			<div class="col-md-5">
+				<ul class="list-group">
+					<li class="list-group-item" *ngFor="let item of items; let i = index"
+					routerLink="{{i}}/edit" routerLinkActive="active" style="cursor: pointer; line-height: 15px">
+						<img src="{{item.imagePath}}" style="width: 100px; height: 100px; float: right;">
+						<p>#{{item.prodId}} <strong>{{item.itemName}}</strong>  {{item.group}}</p>
+						<p>Color: {{item.color}} | Size:{{item.size}}</p>
+						<p>${{item.prize}}</p>		
+					</li>
+				</ul>			
+			</div>
+			<div class="col-md-7">
+				<router-outlet></router-outlet>
+			</div>
 		</div>
 	</div>
+	<p *ngIf="items.length == 0 && !error">No items In Inventory</p>
 </div>

@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { CartService } from './cart.service';
 import { CartShoeModel } from './cart-shoe.model';
+import { CartStorageService } from './cart-storage.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,14 +12,24 @@ import { CartShoeModel } from './cart-shoe.model';
 })
 export class CartComponent implements OnInit {
 
-	@Input() cartShoe: CartShoeModel;
-	items: CartShoeModel[] ;
+	items: CartShoeModel[] = [];
+  totalqty: number = 0;
 
-	constructor(private router: Router, private route: ActivatedRoute, private cartService: CartService){
+	constructor(private router: Router, private route: ActivatedRoute, private cartService: CartService, private cartDataService: CartStorageService){
 	}
 
   ngOnInit() {
-  	this.items = this.cartService.cartItems;
+    this.items = this.cartService.cartItems;
+    this.cartService.cartItemChanged.subscribe(items=>{
+      this.items = items;
+    });
+    this.cartService.itemQuantity();
+    // for(let item of this.items){
+    //     this.totalqty += item.noOfItems;
+    //   }
+    //   console.log(this.totalqty);
+    //   this.cartService.noOfItems.next(this.totalqty);
+    //   this.totalqty = 0;
   }
 
   onClickItem(id: number, group: string){
@@ -26,7 +37,14 @@ export class CartComponent implements OnInit {
   }
 
   removeItem(index: number){
-    this.cartService.cartItems.splice(index, 1);
+    this.cartDataService.deleteCartItem(index).subscribe(()=>{
+      this.cartService.removeCartItem(index);
+      this.cartDataService.addCartItem();
+    });
+    // this.cartDataService.fetchCartItems().subscribe(items=>{
+    //   this.items = items;
+    // });
+    // this.cartService.cartItems.splice(index, 1);
   }
 
   onClose(){

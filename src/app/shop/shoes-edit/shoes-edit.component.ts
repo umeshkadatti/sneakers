@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import { ShopService } from '../shop.service';
 import { ShoeModel } from '../../shared/shoe.model';
+import { DataStorageService } from '../../shared/data-storage.service';
 
 @Component({
   selector: 'app-shoes-edit',
@@ -17,9 +19,8 @@ export class ShoesEditComponent implements OnInit {
 	id: number;
   genders = ['men', 'women'];
   shoeForm: FormGroup;
-  update = false;
 
-  constructor(private shopService: ShopService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private shopService: ShopService, private route: ActivatedRoute, private router: Router, private http: HttpClient, private dataService: DataStorageService) { }
 
   ngOnInit() {
   	this.route.params.subscribe((params: Params)=>{
@@ -27,16 +28,17 @@ export class ShoesEditComponent implements OnInit {
   		this.shoe = this.shopService.getShoeByIndex(this.id);
   		this.editMode = params['id'] != null;
 		this.initForm();
-  	})
+    // this.shoeForm.get('name').valueChanges.subscribe(value=>{
+    //   console.log(value);
+    // });
+    // this.shoeForm.get('name').statusChanges.subscribe(status=>{
+    //   console.log(status);
+    // });
+  	});
   }
 
   onSubmit(){
-  	let shoe = this.shoeForm.value;
-  }
-
-// constructor(public prodId: number, public group: string, public itemName: string, public prize: number, public imagePath: string, public hoverImagePath: string, public color: string, public size: number, public sale: string){}
-
-  onAdd(){
+    let shoe = this.shoeForm.value;
     let itemId = this.shoeForm.get('id').value;
     let itemName = this.shoeForm.get('name').value;
     let group = this.shoeForm.get('group').value;
@@ -48,7 +50,7 @@ export class ShoesEditComponent implements OnInit {
     let sale = this.shoeForm.get('sale').value;
     let newShoe = new ShoeModel(itemId, group, itemName, price, imageUrl, imageHoverUrl, color, size, sale);
     if(!this.editMode){
-      this.shopService.addShoe(newShoe);
+      this.shopService.addShoe(newShoe);  
     } else {
       this.shopService.updateShoes(this.id, newShoe);
     }
@@ -65,6 +67,7 @@ export class ShoesEditComponent implements OnInit {
 
   onDelete(){
     this.shopService.deleteShoe(this.id);
+    this.onCancel();
   }
 
   private initForm(){
@@ -78,7 +81,7 @@ export class ShoesEditComponent implements OnInit {
     let imageHoverUrl = '';
     let sale = 'no';
   	if(this.editMode){
-      this.update = true;
+      this.editMode = true;
   		let shoe = this.shopService.getShoeByIndex(this.id);
   		itemId = shoe.prodId;
   		itemName = shoe.itemName;
@@ -91,15 +94,15 @@ export class ShoesEditComponent implements OnInit {
       sale = shoe.sale;
   	}
   	this.shoeForm = new FormGroup({
-      'id': new FormControl(itemId),
-      'name': new FormControl(itemName),
-      'group': new FormControl(group),
-      'color': new FormControl(color),
-      'size': new FormControl(size),
-      'price': new FormControl(price),
-      'imageUrl': new FormControl(imageUrl),
-      'imageHoverUrl': new FormControl(imageHoverUrl),
-      'sale': new FormControl(sale)
+      'id': new FormControl(itemId, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
+      'name': new FormControl(itemName, [Validators.required, Validators.pattern(/[a-z]{1,4}/)]),
+      'group': new FormControl(group, Validators.required),
+      'color': new FormControl(color, [Validators.required, Validators.pattern('[a-zA-Z]*')]),
+      'size': new FormControl(size, [Validators.required, Validators.pattern('[1-9]+[0-9]*')]),
+      'price': new FormControl(price, [Validators.required, Validators.pattern('[1-9]+[0-9]*')]),
+      'imageUrl': new FormControl(imageUrl, Validators.required),
+      'imageHoverUrl': new FormControl(imageHoverUrl, Validators.required),
+      'sale': new FormControl(sale, Validators.required)
   	}); 
   }
 

@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +26,10 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
 import { OrderSummaryComponent } from './shop/view-cart/order-summary/order-summary.component';
 import { ItemsComponent } from './shop/items/items.component';
+import { ItemResolveService } from './shop/items/item-resolver.service';
+import { CartResolveService } from './shop/cart/cart-resolve.service';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 // import { ProdDetailResolver } from './shop/shoes-detail/prod-detail.resolver';
 
 const appRoutes: Routes = [
@@ -31,15 +37,17 @@ const appRoutes: Routes = [
   {path: 'shop', component: ShopComponent, canActivate : [AuthGuard],
     children: [
       {path: 'cart', component: CartComponent},
-      {path: 'view-cart', component: ViewCartComponent},
+      {path: 'view-cart', component: ViewCartComponent, resolve: [CartResolveService]},
       {path: 'items', component: ItemsComponent, children: [
         { path: 'new', component: ShoesEditComponent },
-        { path: ':id/edit', component: ShoesEditComponent } 
+        { path: ':id/edit', component: ShoesEditComponent, resolve: [ItemResolveService] } 
       ]},
-      {path: ':cat', component: ShoesListComponent, resolve: {type : ShoeResolver }},
-      {path: ':cat/:prodid', component: ShoesDetailComponent }
+      {path: ':cat', component: ShoesListComponent, resolve: {type : ShoeResolver} },
+      {path: ':cat/:prodid', component: ShoesDetailComponent, resolve: [ItemResolveService]}
     ]
   },
+  {path: 'about-us', component: AboutUsComponent},
+  {path: 'contact-us', component: ContactUsComponent},
   {path: 'not-found', component: PageNotFoundComponent},
   {path: '**', redirectTo: 'not-found'}
  ]
@@ -62,13 +70,16 @@ const appRoutes: Routes = [
     ViewCartComponent,
     AuthComponent,
     OrderSummaryComponent,
-    ItemsComponent
+    ItemsComponent,
+    AboutUsComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule, AgmCoreModule.forRoot({ apiKey: 'AIzaSyABkdU0fSCVer-QKYNjrTuhAomE2l6fSWY' }),
     RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'})
   ],
   providers: [ShoeResolver, AuthGuard, AuthService],

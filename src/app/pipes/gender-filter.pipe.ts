@@ -13,12 +13,18 @@ export class GenderFilterPipe implements PipeTransform{
 
 	transform(value: any, filterType: string, propName: string, sortBy: string){
 		let resultArray = [];
-		for(let item of value){
-			if(item[propName] == filterType){
-				resultArray.push(item);
+		if(value){
+			for(let item of value){
+				if(item[propName] == filterType){
+					resultArray.push(item);
+				}
 			}
 		}
-		this.shopService.getNextShoe(resultArray);
+		
+
+		//sorted arrays send to shopService
+		// this.shopService.sortArrays();
+		this.shopService.resultArray.next(resultArray);
 
 		//No sort
 

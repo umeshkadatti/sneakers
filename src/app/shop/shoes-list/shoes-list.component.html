@@ -27,19 +27,20 @@
 				<div class="dropdown" style="border: 1px solid black">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Sort by</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" (click)="sortClick('')">SortBy</a>
-						<a class="dropdown-item" (click)="sortClick('newest')">Newest</a>
-						<a class="dropdown-item" (click)="sortClick('prizeLtoH')">Price (low - heigh)</a>
-						<a class="dropdown-item" (click)="sortClick('prizeHtoL')">Price (heigh - low)</a>
-						<a class="dropdown-item" (click)="sortClick('nameAtoZ')">Name A-Z</a>
-						<a class="dropdown-item" (click)="sortClick('nameZtoA')">Name Z-A</a>
+						<a class="dropdown-item" (click)="sortClick('')" style="cursor: pointer">SortBy</a>
+						<a class="dropdown-item" (click)="sortClick('newest')" style="cursor: pointer">Newest</a>
+						<a class="dropdown-item" (click)="sortClick('prizeLtoH')" style="cursor: pointer">Price (low - heigh)</a>
+						<a class="dropdown-item" (click)="sortClick('prizeHtoL')" style="cursor: pointer">Price (heigh - low)</a>
+						<a class="dropdown-item" (click)="sortClick('nameAtoZ')" style="cursor: pointer">Name A-Z</a>
+						<a class="dropdown-item" (click)="sortClick('nameZtoA')" style="cursor: pointer">Name Z-A</a>
 					</div>
 				</div>
 			</div><br><br>
 			<div class="row">
+				<p *ngIf="isLoading">Loading...</p>
 				<div style="margin-bottom: 10px;" *ngFor="let shoe of shoes | filter:type:'group':sortBy" class="col-md-6" >
 					<div class="container" (click)="onClickProduct(shoe.prodId)">
-						<img class="change-img" src={{shoe.imagePath}} class="image">
+						<img src={{shoe.imagePath}} class="image">
 						<div [ngClass]="{overlay: true}" 
 						[ngStyle]="{'background-image': 'url(../'+ shoe.hoverImagePath +')', width: '400px', height: '400px', backgroundRepeat: 'no-repeat'}"></div>
 						<p style="margin-bottom: 3px"> {{shoe.itemName}}</p>

@@ -3,6 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 
 
+@Injectable()
 export class ShoeResolver implements Resolve<string>{
 
 	constructor(){}

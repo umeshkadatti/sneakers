@@ -21,16 +21,16 @@
 			</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="">About Us</a>
+			<a class="nav-link" [routerLink]="['about-us']">About Us</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="">Customer Service</a>
+			<a class="nav-link" [routerLink]="['contact-us']">Customer Service</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" (click)="onLogIn()"style="color: #eb6126; font-size:25px; cursor: pointer;"><span class="fa fa-user-circle"></span>{{ isLogIn ? 'Log In' : 'Log Out'}}</a>
 		</li>
 		<li class="nav-itm">
-			<a (click)="onClick()" style="color: #eb6126; font-size:25px; cursor: pointer;"><span class="fa fa-shopping-cart"></span></a>
+			<a (click)="onClick()" style="color: #eb6126; font-size:25px; cursor: pointer;"><span class="fa fa-shopping-cart"><span style="color: white; margin-left: -15px; font-size: 20px"><sup>{{noOfItems}}</sup></span></span></a>
 		</li>
 	</ul>
 </nav>

@@ -2,40 +2,48 @@
  -->
 <form (ngSubmit)="onSubmit()" [formGroup]="shoeForm">
 	<div>
-		<button class="btn btn-primary" type="submit" *ngIf="!update" (click)="onAdd()">Save</button> &nbsp; 
-		<button class="btn btn-success" type="button" *ngIf="update" (click)="onAdd()">Update</button> &nbsp; 
-		<button class="btn btn-danger" type="button" *ngIf="update" (click)="onDelete()">Delete</button> &nbsp;
+		<button class="btn btn-success" type="submit" [disabled]="!shoeForm.valid">{{ editMode ? 'Update' : 'Add'}}</button> &nbsp;
+		<button class="btn btn-danger" type="button" *ngIf="editMode" (click)="onDelete()">Delete</button> &nbsp;
 		<button class="btn btn-primary" type="button" (click)="onClear()">Clear</button> &nbsp;
 		<button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
 	</div>
 	<label for="id">Product Id : </label>
-	<input style="" type="number" formControlName="id" id="id"><br>
+	<input style="" type="number" formControlName="id" id="id"><sup>*</sup><br>
+	<p *ngIf="shoeForm.get('id').invalid && shoeForm.get('id').touched" style="">Enter Product Id</p>
 	<label for="name">Product Name : </label>
-	<input style="" type="text" formControlName="name" id="name"><br>
+	<input style="" type="text" formControlName="name" id="name"><sup>*</sup><br>
+	<p *ngIf="shoeForm.get('name').invalid && shoeForm.get('name').touched" style="">Enter Product Name</p>
 	Gender:
 	<label *ngFor="let gender of genders">
 		<input type="radio" formControlName="group" [value]="gender">{{gender}}
-	</label><br>
+	</label><sup>*</sup><br>
+	<p *ngIf="shoeForm.get('group').invalid && shoeForm.get('group').touched" style="">Select a gender</p>
 	<label for="color">Color: </label>
-	<input type="text" formControlName="color" id="color"><br>
+	<input type="text" formControlName="color" id="color"><sup>*</sup><br>
+	<p *ngIf="shoeForm.get('color').invalid && shoeForm.get('color').touched" style="">Enter Product color</p>
 	<label for="size">Size: </label>
-	<input type="number" formControlName="size" id="size"><br>
+	<input type="number" formControlName="size" id="size"><sup>*</sup><br>
+	<p *ngIf="shoeForm.get('size').invalid && shoeForm.get('size').touched" style="">Select a size</p>
 	<label for="price">Price: $</label>
-	<input type="number" formControlName="price" id="price"><br>
+	<input type="number" formControlName="price" id="price"><sup>*</sup><br>
+	<p *ngIf="shoeForm.get('price').invalid && shoeForm.get('price').touched" style="">Enter a price</p>
 	Sale:
 	<select formControlName="sale"> 
 		<option value="yes">Yes</option>
 		<option value="no">No</option>
-	</select>
+	</select><sup>*</sup>
+	<p *ngIf="shoeForm.get('sale').invalid && shoeForm.get('sale').touched" style="">Select type of sale</p>
 	<div class="row">
 		<div class="col-6-md">
 			<label for="imageUrl">Image URL: </label>
-			<input type="text" formControlName="imageUrl" id="imageUrl" #imageUrl><br>
+			<input type="text" formControlName="imageUrl" id="imageUrl" #imageUrl><sup>*</sup><br>
+			<p *ngIf="shoeForm.get('imageUrl').invalid && shoeForm.get('imageUrl').touched" style="">Enter main image URL</p>
 			<img class="img-responsive" [src]="imageUrl.value" style="max-height: 300px">
 		</div>
 		<div class="col-6-md" style="margin-left : 20px">
 			<label for="imageHoverUrl">Image Hover URL: </label>
-			<input type="text" formControlName="imageHoverUrl" id="imageHoverUrl" #imageHoverUrl><br>
+			<input type="text" formControlName="imageHoverUrl" id="imageHoverUrl" #imageHoverUrl><sup>*</sup><br>
+			<p *ngIf="shoeForm.get('imageHoverUrl').invalid && shoeForm.get('imageHoverUrl').touched" style="">Enter hover image URL</p>
 			<img class="img-responsive" [src]="imageHoverUrl.value" style="max-height: 300px">
 		</div>
 	</div>

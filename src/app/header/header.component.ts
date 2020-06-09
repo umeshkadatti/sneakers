@@ -2,8 +2,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ShopService } from '../shop/shop.service';
-
 import { AuthService } from '../auth.service';
+import { CartService } from '../shop/cart/cart.service';
+import { AuthGuard } from './../auth-guard.service';
 
 @Component({
   selector: 'app-header',
@@ -12,11 +13,18 @@ import { AuthService } from '../auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router, private route: ActivatedRoute, private shopServie: ShopService, private authService: AuthService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private shopServie: ShopService, private authService: AuthService, private cartService: CartService, private authGuardService: AuthGuard) { }
 
   isLogIn = true;
+  noOfItems = null;
 
   ngOnInit() {
+    this.authGuardService.length.subscribe(length=>{
+      this.noOfItems = length;
+    });
+    this.cartService.noOfItems.subscribe(no=>{
+      this.noOfItems = no;
+    });
   }
 
   onLogIn(){
@@ -35,7 +43,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onClick(){
-  	this.router.navigate(['shop/cart']);
+  	this.router.navigate(['shop/view-cart']);
   }
 
 }

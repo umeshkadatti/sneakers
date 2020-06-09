@@ -1,8 +1,10 @@
-  import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import { ShopService } from '../shop.service';
 import { ShoeModel } from '../../shared/shoe.model';
+import { DataStorageService } from '../../shared/data-storage.service';
 
 @Component({
   selector: 'app-shoes-list',
@@ -14,14 +16,20 @@ export class ShoesListComponent implements OnInit {
 	shoes: ShoeModel[];
 	type: any;
   sortBy: string = '';
+  isLoading = false;
 
-  constructor(private shopService: ShopService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private shopService: ShopService, private route: ActivatedRoute, private router: Router, private dataService: DataStorageService) { }
 
-  ngOnInit() {
+   ngOnInit() {
     this.route.data.subscribe(data=>{
       this.type = data['type'];
-    })
-  	this.shoes = this.shopService.getShoes();
+    });
+    this.isLoading = true;
+    // this.shoes = this.shopService.getShoes();
+    this.dataService.fetchPosts().subscribe(shoes=>{
+      this.isLoading = false;
+      this.shoes = shoes;      
+    });  	
   }
 
   onClickProduct(id: number){
